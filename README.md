@@ -51,7 +51,7 @@ a corresponding [Digital Ocean Community Tutorial](http://bit.ly/1AGUZkq).
 ### More Reading
 
 Miscellaneous write-ups for advanced configurations are available in the
-[docs](docs) folder.
+[docs](docs) folder. For advanced network configurations, such as using TCP or a custom port, please see our [detailed guide on TCP and custom port usage](docs/tcp.md).
 
 ### Systemd Init Scripts
 
