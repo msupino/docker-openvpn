@@ -350,9 +350,14 @@ fi
 [ -n "$OVPN_CIPHER" ] && echo "cipher $OVPN_CIPHER" >> "$conf"
 [ -n "$OVPN_AUTH" ] && echo "auth $OVPN_AUTH" >> "$conf"
 
+echo "data-ciphers AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305" >> "$conf"
+echo "data-ciphers-fallback AES-256-GCM" >> "$conf"
+echo "allow-compression no" >> "$conf"
+
 [ -n "${OVPN_CLIENT_TO_CLIENT:-}" ] && echo "client-to-client" >> "$conf"
-[ "$OVPN_COMP_LZO" == "1" ] && echo "comp-lzo" >> "$conf"
-[ "$OVPN_COMP_LZO" == "0" ] && echo "comp-lzo no" >> "$conf"
+if [ "$OVPN_COMP_LZO" == "1" ]; then
+    echo "comp-lzo" >> "$conf"
+fi
 
 [ -n "${OVPN_FRAGMENT:-}" ] && echo "fragment $OVPN_FRAGMENT" >> "$conf"
 
@@ -370,8 +375,8 @@ fi
   process_push_config "dhcp-option DNS $i"
 done
 
-if [ "$OVPN_COMP_LZO" == "0" ]; then
-    process_push_config "comp-lzo no"
+if [ "$OVPN_COMP_LZO" == "1" ]; then
+    process_push_config "comp-lzo"
 fi
 
 [ ${#OVPN_PUSH[@]} -gt 0 ] && for i in "${OVPN_PUSH[@]}"; do
